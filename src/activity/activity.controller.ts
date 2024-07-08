@@ -11,10 +11,10 @@ export class ActivityController {
 
   constructor(private readonly activityService: ActivityService) {}
 
-  @ApiOperation({ summary: 'Retrieve all activity' })
-  @ApiResponse({ status: 200, description: 'List of all activity' })
+  @ApiOperation({ summary: 'Retrieve all activities' })
+  @ApiResponse({ status: 200, description: 'List of all activities' })
   @Get()
-  findAll(): Promise<Activity[]> {
+  async findAll(): Promise<Activity[]> {
     this.logger.log('GET /activity');
     return this.activityService.findAll();
   }
@@ -22,7 +22,7 @@ export class ActivityController {
   @ApiOperation({ summary: 'Retrieve a single activity by ID' })
   @ApiResponse({ status: 200, description: 'Activity details' })
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Activity> {
+  async findOne(@Param('id') id: string): Promise<Activity> {
     this.logger.log(`GET /activity/${id}`);
     return this.activityService.findOne(+id);
   }
@@ -30,7 +30,7 @@ export class ActivityController {
   @ApiOperation({ summary: 'Create a new activity' })
   @ApiResponse({ status: 201, description: 'Activity created' })
   @Post()
-  create(@Body() createActivityDto: CreateActivityDto): Promise<Activity> {
+  async create(@Body() createActivityDto: CreateActivityDto): Promise<Activity> {
     this.logger.log('POST /activity');
     return this.activityService.create(createActivityDto);
   }
@@ -38,7 +38,7 @@ export class ActivityController {
   @ApiOperation({ summary: 'Update an existing activity' })
   @ApiResponse({ status: 200, description: 'Activity updated' })
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto): Promise<void> {
+  async update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto): Promise<void> {
     this.logger.log(`PUT /activity/${id}`);
     return this.activityService.update(+id, updateActivityDto);
   }
@@ -46,7 +46,7 @@ export class ActivityController {
   @ApiOperation({ summary: 'Delete an activity by ID' })
   @ApiResponse({ status: 200, description: 'Activity deleted' })
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: string): Promise<void> {
     this.logger.log(`DELETE /activity/${id}`);
     return this.activityService.remove(+id);
   }

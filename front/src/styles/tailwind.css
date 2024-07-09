@@ -1,7 +1,3 @@
-/* src/styles/tailwind.css */
-
-/* Importação completa do Tailwind CSS */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-

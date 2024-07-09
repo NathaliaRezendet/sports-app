@@ -7,8 +7,8 @@ const UpdateActivityPage = () => {
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
   const [editName, setEditName] = useState('');
-  const [currentPage, setCurrentPage] = useState(1); // Página atual
-  const [itemsPerPage, setItemsPerPage] = useState(5); // Quantidade de itens por página
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [itemsPerPage, setItemsPerPage] = useState(5); 
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -69,17 +69,17 @@ const UpdateActivityPage = () => {
     <div>
       <Navbar />
       <div className="p-6 bg-gray-100 min-h-screen">
-        <h1 className="text-3xl font-bold mb-6">Update Activities</h1>
+        <h1 className="text-3xl font-bold mb-6">Atualizar atividade</h1>
         {loading ? (
-          <p className="text-center text-gray-500">Loading...</p>
+          <p className="text-center text-gray-500">Carregando...</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
               <thead className="bg-gray-800 text-white">
                 <tr>
                   <th className="p-4 text-left">ID</th>
-                  <th className="p-4 text-left">Name</th>
-                  <th className="p-4 text-left">Actions</th>
+                  <th className="p-4 text-left">Nome</th>
+                  <th className="p-4 text-left">Descrição</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,21 +105,21 @@ const UpdateActivityPage = () => {
                             onClick={() => handleSaveClick(activity.id)}
                             className="bg-green-500 text-white px-4 py-2 rounded"
                           >
-                            Save
+                            Salvar
                           </button>
                           <button
                             onClick={handleCancelClick}
                             className="bg-red-500 text-white px-4 py-2 rounded"
                           >
-                            Cancel
+                            Cancelar
                           </button>
                         </div>
                       ) : (
                         <button
                           onClick={() => handleEditClick(activity.id, activity.name)}
-                          className="bg-blue-500 text-white px-4 py-2 rounded"
+                          className="bg-blue-950 text-white px-4 py-2 rounded"
                         >
-                          Update
+                          Atualizar
                         </button>
                       )}
                     </td>
@@ -135,14 +135,14 @@ const UpdateActivityPage = () => {
                   disabled={currentPage === 1}
                   className="bg-gray-200 text-gray-600 px-3 py-1 rounded"
                 >
-                  First
+                  Primeira
                 </button>
                 <button
                   onClick={prevPage}
                   disabled={currentPage === 1}
                   className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
                 >
-                  Prev
+                  Anterior
                 </button>
               </div>
               <div>
@@ -151,14 +151,14 @@ const UpdateActivityPage = () => {
                   disabled={currentPage === Math.ceil(activities.length / itemsPerPage)}
                   className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
                 >
-                  Next
+                  Próxima
                 </button>
                 <button
                   onClick={lastPage}
                   disabled={currentPage === Math.ceil(activities.length / itemsPerPage)}
                   className="bg-gray-200 text-gray-600 px-3 py-1 rounded"
                 >
-                  Last
+                  Última
                 </button>
               </div>
             </div>

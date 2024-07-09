@@ -5,8 +5,8 @@ import Navbar from './components/Navbar';
 const ActivitiesListPage = () => {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1); // Página atual
-  const [itemsPerPage, setItemsPerPage] = useState(5); // Quantidade de itens por página
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -23,7 +23,6 @@ const ActivitiesListPage = () => {
     fetchActivities();
   }, []);
 
-  // Paginação
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentActivities = activities.slice(indexOfFirstItem, indexOfLastItem);
@@ -44,9 +43,8 @@ const ActivitiesListPage = () => {
     setCurrentPage(Math.ceil(activities.length / itemsPerPage));
   };
 
-
   return (
-    <div>
+    <div className="h-screen">
       <Navbar />
       <div className="p-6 bg-gray-100 min-h-screen">
         <h1 className="text-3xl font-bold mb-6">Lista de atividades</h1>
@@ -54,7 +52,7 @@ const ActivitiesListPage = () => {
           <p className="text-center text-gray-500">Loading...</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden divide-y divide-gray-200">
               <thead className="bg-gray-800 text-white">
                 <tr>
                   <th className="p-4 text-left">ID</th>
@@ -62,9 +60,9 @@ const ActivitiesListPage = () => {
                   <th className="p-4 text-left">Descrição</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-white divide-y divide-gray-200">
                 {currentActivities.map(activity => (
-                  <tr key={activity.id} className="border-b">
+                  <tr key={activity.id}>
                     <td className="p-4">{activity.id}</td>
                     <td className="p-4">{activity.name}</td>
                     <td className="p-4">{activity.description}</td>
@@ -75,41 +73,40 @@ const ActivitiesListPage = () => {
           </div>
         )}
 
-        {/* Paginação */}
         <div className="flex justify-between items-center mt-4">
-              <div>
-                <button
-                  onClick={firstPage}
-                  disabled={currentPage === 1}
-                  className="bg-gray-200 text-gray-600 px-3 py-1 rounded"
-                >
-                  First
-                </button>
-                <button
-                  onClick={prevPage}
-                  disabled={currentPage === 1}
-                  className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
-                >
-                  Prev
-                </button>
-              </div>
-              <div>
-                <button
-                  onClick={nextPage}
-                  disabled={currentPage === Math.ceil(activities.length / itemsPerPage)}
-                  className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
-                >
-                  Next
-                </button>
-                <button
-                  onClick={lastPage}
-                  disabled={currentPage === Math.ceil(activities.length / itemsPerPage)}
-                  className="bg-gray-200 text-gray-600 px-3 py-1 rounded"
-                >
-                  Last
-                </button>
-              </div>
-            </div>
+          <div>
+            <button
+              onClick={firstPage}
+              disabled={currentPage === 1}
+              className="bg-gray-200 text-gray-600 px-3 py-1 rounded"
+            >
+              Primeira
+            </button>
+            <button
+              onClick={prevPage}
+              disabled={currentPage === 1}
+              className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
+            >
+              Anterior
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={nextPage}
+              disabled={currentPage === Math.ceil(activities.length / itemsPerPage)}
+              className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
+            >
+              Próxima
+            </button>
+            <button
+              onClick={lastPage}
+              disabled={currentPage === Math.ceil(activities.length / itemsPerPage)}
+              className="bg-gray-200 text-gray-600 px-3 py-1 rounded"
+            >
+              Última
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const Modal = ({ onClose, children }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
       <div className="bg-white rounded-lg p-8 max-w-md w-full">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Activity Details</h2>
+          <h2 className="text-xl font-bold">Detalhes da Atividades</h2>
           <button
             className="text-gray-500 hover:text-gray-700"
             onClick={onClose}
@@ -22,18 +22,18 @@ const Modal = ({ onClose, children }) => {
             className="bg-red-500 text-white px-4 py-2 rounded mr-2"
             onClick={() => {}}
           >
-            Delete Activity
+            Deletar
           </button>
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded"
             onClick={onClose}
           >
-            Close
+            Fechar
           </button>
         </div>
       </div>
     </div>,
-    document.getElementById('modal-root') // Aqui define o elemento onde o portal será renderizado
+    document.getElementById('modal-root') 
   );
 };
 

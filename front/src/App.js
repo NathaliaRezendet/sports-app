@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './styles/tailwind.css'
+import './styles/style.css';
 import NavigationPage from './pages/NavigationPage';
 import AddActivityPage from './pages/AddActivityPage';
 import ActivitiesListPage from './pages/ActivitiesListPage';

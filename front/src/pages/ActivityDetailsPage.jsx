@@ -14,6 +14,8 @@ const ActivityDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6);
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -59,57 +61,89 @@ const ActivityDetailsPage = () => {
       activity.name.toLowerCase().includes(term)
     );
     setFilteredActivities(filtered);
+    setCurrentPage(1); 
   };
 
-  if (loading) return <p>Loading...</p>;
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentActivities = filteredActivities.slice(indexOfFirstItem, indexOfLastItem);
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  const firstPage = () => {
+    setCurrentPage(1);
+  };
+
+  const lastPage = () => {
+    setCurrentPage(Math.ceil(filteredActivities.length / itemsPerPage));
+  };
+
+  if (loading) return <p>Carregando...</p>;
 
   return (
     <div>
       <Navbar />
-      <div className="max-w-4xl mx-auto mt-10">
-        <h1 className="text-2xl font-bold mb-4">Activities</h1>
-        <div className="mb-4">
+      <div className="max-w-4xl mx-auto mt-10 mb-10">
+        <h1 className="text-slate-900 font-extrabold text-4xl sm:text-3xl tracking-tight text-center dark:text-white mb-10">
+          Atividades
+        </h1>
+        <div className="mb-10">
           <input
             type="text"
-            placeholder="Search by name"
-            className="p-2 border border-gray-300 rounded-md"
+            placeholder="Procure sua atividade"
+            className="p-3 text-lg border border-gray-200 rounded-md block mx-auto w-full md:w-96 mb-10"
             value={searchTerm}
             onChange={handleSearchChange}
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredActivities.map((activity) => (
+          {currentActivities.map((activity) => (
             <div
               key={activity.id}
-              className={`p-4 bg-white rounded shadow cursor-pointer hover:shadow-lg ${
-                selectedActivity && selectedActivity.id === activity.id ? 'flex justify-center items-center h-screen' : ''
-              }`}
+              className={`p-4 rounded shadow cursor-pointer hover:shadow-lg`}
+              style={{ backgroundColor: 'rgb(209 213 219 / var(--tw-text-opacity))' }}
               onClick={() => handleActivityClick(activity)}
             >
-              <div className={`w-full sm:w-3/4 lg:w-full ${selectedActivity && selectedActivity.id === activity.id ? '' : 'hidden'}`}>
-                <h2 className="text-xl font-semibold text-black">{activity.name}</h2>
-                <p className="text-black">{activity.description}</p>
+              <div className="w-full">
+                <h2 className="text-xl font-semibold text-white">{activity.name}</h2>
+                <p className="text-sm text-gray-300">{activity.description}</p>
               </div>
             </div>
           ))}
+        </div>
+        <div className="flex justify-center items-center mt-6">
+          <button
+            onClick={prevPage}
+            disabled={currentPage === 1}
+            className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
+          >
+            Anterior
+          </button>
+          <button
+            onClick={nextPage}
+            disabled={currentPage === Math.ceil(filteredActivities.length / itemsPerPage)}
+            className="bg-gray-200 text-gray-600 px-3 py-1 rounded mx-2"
+          >
+            Próxima
+          </button>
         </div>
       </div>
 
       {modalOpen && selectedActivity && (
         <Modal onClose={handleCloseModal}>
           <div className="p-4">
-            <h2 className="text-2xl font-bold mb-4">Activity Details</h2>
             <p>
-              <strong>ID:</strong> {selectedActivity.id}
+              <strong>Nome:</strong> {selectedActivity.name}
             </p>
             <p>
-              <strong>Name:</strong> {selectedActivity.name}
-            </p>
-            <p>
-              <strong>Description:</strong> {selectedActivity.description}
-            </p>
-            <p>
-              <strong>Date:</strong> {selectedActivity.date}
+              <strong>Descrição:</strong> {selectedActivity.description}
             </p>
             {selectedActivity.photos && (
               <Carousel
@@ -128,12 +162,6 @@ const ActivityDetailsPage = () => {
                 ))}
               </Carousel>
             )}
-            <button
-              className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-              onClick={() => handleDeleteActivity(selectedActivity.id)}
-            >
-              Delete Activity
-            </button>
           </div>
         </Modal>
       )}

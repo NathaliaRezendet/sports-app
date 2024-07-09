@@ -24,7 +24,7 @@ const DeleteActivityPage = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [activitiesPerPage] = useState(5); // Número de atividades por página
+  const [activitiesPerPage] = useState(5); 
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -41,12 +41,10 @@ const DeleteActivityPage = () => {
     fetchActivities();
   }, []);
 
-  // Paginação
   const indexOfLastActivity = currentPage * activitiesPerPage;
   const indexOfFirstActivity = indexOfLastActivity - activitiesPerPage;
   const currentActivities = activities.slice(indexOfFirstActivity, indexOfLastActivity);
 
-  // Mudar de Página
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const openModal = (activity) => {
@@ -78,11 +76,11 @@ const DeleteActivityPage = () => {
     <div>
       <Navbar />
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Deletar</h1>
+        <h1 class="text-slate-900 font-extrabold text-4xl sm:text-3xl  tracking-tight text-center dark:text-white">Delete uma atividade</h1>
         <ul>
           {currentActivities.map(activity => (
             <li key={activity.id} className="flex justify-between items-center mb-2 p-2 border-b">
-              <span>{activity.name}</span>
+              <span class="text-slate-900 font-extrabold text-2xl sm:text-2xl  tracking-tight text-center dark:text-white">{activity.name}</span>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded"
                 onClick={() => openModal(activity)}
@@ -92,19 +90,17 @@ const DeleteActivityPage = () => {
             </li>
           ))}
         </ul>
-        {/* Paginação */}
         <div className="mt-4 flex justify-center">
           {[...Array(Math.ceil(activities.length / activitiesPerPage)).keys()].map(number => (
             <button
               key={number + 1}
               onClick={() => paginate(number + 1)}
-              className={`mx-1 px-4 py-2 bg-blue-500 text-white rounded ${currentPage === number + 1 ? 'bg-blue-600' : 'hover:bg-blue-600'}`}
+              className={`mx-1 px-4 py-2 bg-gray-200 text-gray-600 px-3 py-1 rounded ${currentPage === number + 1 ? 'bg-blue-600' : 'hover:bg-blue-600'}`}
             >
               {number + 1}
             </button>
           ))}
         </div>
-        {/* Modal de Confirmação */}
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
@@ -114,7 +110,6 @@ const DeleteActivityPage = () => {
           <h2 className="text-xl font-bold mb-4">Certeza que deseja deletar essa atividades?</h2>
           {selectedActivity && (
             <div className="mb-4">
-              <p><strong>ID:</strong> {selectedActivity.id}</p>
               <p><strong>Name:</strong> {selectedActivity.name}</p>
             </div>
           )}
